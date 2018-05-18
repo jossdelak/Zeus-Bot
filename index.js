@@ -153,7 +153,28 @@ bot.on('message', message=>{
                         sendError(message,"Erreur, vous devez rejoindre un channel vocal");
                     }
                 }
-
+                
+                if(splitMessage[1]==='quentin'){
+                    if(message.member.voiceChannel){
+                        message.member.voiceChannel.join().then(connection =>{
+                            dispatcher = connection.playFile("./son/quentinFdp.flv");              //Son quentinFdp
+    
+                            dispatcher.on('error', e =>{
+                                console.log(e);
+                            });
+    
+                            dispatcher.on('end', e =>{
+                                dispatcher == undefined
+                                message.member.voiceChannel.leave();
+                                console.log('fin du son');
+                            });
+                        }).catch(console.log);
+                    }
+                    else{
+                        sendError(message,"Erreur, vous devez rejoindre un channel vocal");
+                    }
+                }
+                
                 if(splitMessage[1]==='nico'){
                     message.channel.sendFile("./image/nico.gif");
                     if(message.member.voiceChannel){
